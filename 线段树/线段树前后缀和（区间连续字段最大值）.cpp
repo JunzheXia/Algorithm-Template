@@ -1,4 +1,5 @@
 单点修改，查询某个区间的最大子段和
+有的题目要求连续相等的，如01串，这时还要记录最右端和最左端的值
 
 #include <bits/stdc++.h>
 using namespace std;
