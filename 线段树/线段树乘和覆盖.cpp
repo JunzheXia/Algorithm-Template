@@ -1,5 +1,37 @@
-支持乘和加的区间修改，以及查询
+优先级： 覆盖 > 乘 > 加法
+处理覆盖标记要把别的标记情空
+void push_down(int ind) {
+    if (tr[ind].cover != INF) {  // 先处理覆盖
+        tr[ind<<1].sum = tr[ind].cover * (tr[ind<<1].r - tr[ind<<1].l + 1);
+        tr[ind<<1|1].sum = tr[ind].cover * (tr[ind<<1|1].r - tr[ind<<1|1].l + 1);
+        tr[ind<<1].cover = tr[ind].cover;  // 子节点继承 cover
+        tr[ind<<1|1].cover = tr[ind].cover;
+        tr[ind<<1].add = 0;  // 覆盖会清空 add 和 mul
+        tr[ind<<1|1].add = 0;
+        tr[ind<<1].mul = 1;
+        tr[ind<<1|1].mul = 1;
+        tr[ind].cover = INF;  // 清除当前节点的 cover
+    }
+    if (tr[ind].mul != 1) {  // 再处理乘法
+        tr[ind<<1].sum *= tr[ind].mul;
+        tr[ind<<1|1].sum *= tr[ind].mul;
+        tr[ind<<1].add *= tr[ind].mul;  // 乘法会影响 add
+        tr[ind<<1|1].add *= tr[ind].mul;
+        tr[ind<<1].mul *= tr[ind].mul;
+        tr[ind<<1|1].mul *= tr[ind].mul;
+        tr[ind].mul = 1;  // 清除当前节点的 mul
+    }
+    if (tr[ind].add != 0) {  // 最后处理加法
+        tr[ind<<1].sum += tr[ind].add * (tr[ind<<1].r - tr[ind<<1].l + 1);
+        tr[ind<<1|1].sum += tr[ind].add * (tr[ind<<1|1].r - tr[ind<<1|1].l + 1);
+        tr[ind<<1].add += tr[ind].add;
+        tr[ind<<1|1].add += tr[ind].add;
+        tr[ind].add = 0;  // 清除当前节点的 add
+    }
+}
 
+    
+支持乘和加的区间修改，以及查询
 #include<bits/stdc++.h>
 #define int long long
 using namespace std;
