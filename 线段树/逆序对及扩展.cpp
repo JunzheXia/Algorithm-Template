@@ -68,6 +68,7 @@ signed main() {
 逆序对我们只需要 计算比离散化后比当前元素的的个数
 那么如何求三元偏序呢，只需要在求比当前元素大的基础上，
 多求一次比当前元素小的个数
+问有多少三元正序对
 
 #include <bits/stdc++.h>
 #define int long long
