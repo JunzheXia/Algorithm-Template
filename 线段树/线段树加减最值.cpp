@@ -1,3 +1,4 @@
+线段树修改的是给定下标的值，如果想修改有某个值的下边，用map映射
 
 struct node {
     i64 l, r, sum, lazy;
