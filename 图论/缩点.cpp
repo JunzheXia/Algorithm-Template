@@ -1,3 +1,5 @@
+缩点一般都是在有向图中进行
+
 #include <bits/stdc++.h>
 
 using namespace std;
