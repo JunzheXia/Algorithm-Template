@@ -58,6 +58,7 @@ int main() {
 }
 
 割边与割点十分相似，主要的区别就是在判断上
+删除边后，图的连通分量增加
 
 #include<bits/stdc++.h>
 using namespace std;
