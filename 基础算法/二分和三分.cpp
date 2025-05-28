@@ -24,3 +24,4 @@ while(l < r){
     }
 }
 cout << check(l) << endl;
+默认找最大值，找最小值将判断反过来
