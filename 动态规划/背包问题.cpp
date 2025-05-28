@@ -112,3 +112,75 @@ for (int i = 1; i <= n; i++) {
         }
     }
 }
+
+树上背包  O(n * w ^ 2) w是每个点要枚举的容量
+每个点依赖其父亲， 只有父亲购买，才可以购买该点
+#include<bits/stdc++.h>
+
+using namespace std;
+const int N = 1e2 + 10;
+int f[N][N]， w[N]， v[N];//f[u][j]表示以u为根的子树，容量j时的最大价值
+vector<int>g[N];
+int n, W;
+
+void dfs(int u) {
+    for (int i = w[u]; i <= W; i++) {
+        f[u][i] = v[u];
+    }
+    for (auto v : g[u]) {
+        dfs(v);
+        //分组背包，倒叙枚举容量
+        for (int i = W; i >= w[u]; i--) {
+            //枚举分配给子树的容量，至少留w[u]给u
+            for (int j = 0; j <= i - w[u]; j++) {
+                f[u][i] = max(f[u][i], f[u][i - j] + f[v][j]);
+            }
+        }
+    }
+}
+
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+    cin >> n >> W;
+    for (int i = 1; i <= n; i++) {
+        int p;
+        cin >> w[i] >> v[i] >> p;
+        g[p].push_back(i);
+    }
+    dfs(0);
+    cout << f[0][W];
+}
+
+背包问题求方案数
+#include <bits/stdc++.h>
+
+using namespace std;
+using i64 = long long;
+using u64 = unsigned long long;
+
+const int MOD = 1e9 + 7, N = 1010;
+i64 n, W, cnt[N], f[N], w, v;
+
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+
+    cin >> n >> W;
+    for (int i = 0; i <= W; i++) {
+        cnt[i] = 1;//不装任何东西就是一种方案
+    }
+    for (int i = 1; i <= n; i++) {
+        cin >> w >> v;
+        for (int j = W; j >= w; j--) {
+            if (f[j] < f[j - w] + v) {
+                f[j] = f[j - w] + v;
+                cnt[j] = cnt[j - w];
+            } else if (f[j] == f[j - w] + v) {
+                cnt[j] = (cnt[j] + cnt[j - w]) % MOD;
+            }
+        }
+    }
+    cout << cnt[W];
+    return 0;
+}
