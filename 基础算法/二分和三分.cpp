@@ -15,3 +15,12 @@ while (l < r) {
         r = mid - 1;
 }
 //l 就是结果
+while(l < r){
+    int mid = (l + r) >> 1;
+    if(check(mid) <= check(mid + 1)){
+        r = mid;
+    else{
+        l = mid + 1;
+    }
+}
+cout << check(l) << endl;
