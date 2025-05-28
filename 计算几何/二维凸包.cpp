@@ -35,7 +35,7 @@ double Andrew() {
         hull.push_back(a[i]);
     }
     int p = hull.size();
-    for (int i = n - 2; i >= 0; i--) {//下凸壳
+    for (int i = n - 2; i >= 0; i--) {//上凸壳
         while (hull.size() > p &&
                cross(hull[hull.size() - 2], hull.back(), a[i]) <= 0) {
             hull.pop_back();
