@@ -78,3 +78,37 @@ for (int i = 1; i <= n; i++) {
         }
     }
 }
+
+混合背包只需要分类按上述方法讨论即可
+
+二维背包
+限制条件由一个变为两个，那么再多一维即可
+for (int i = 1; i <= n; i++) {
+    int v, m, w;
+    cin >> v >> m >> w;
+    for (int j = W; j >= w; j--) {
+        for (int k = M; k >= m; k--) {
+            dp[j][k] = max(dp[j][k], dp[j - w][k - m] + v);
+        }
+    }
+}
+
+分组背包
+每组物品有若干个，同一组的物品最多选一个
+for (int i = 1; i <= n; i++) {
+    int s;
+    cin >> s;
+    vector<pair<int, int>> a;
+    while (s--) {
+        int w, v;
+        cin >> w >> v;
+        a.emplace_back(w, v);
+    }
+    for (int j = W; j >= 0; j--) {
+        for (auto [w, v] : a) {
+            if (j >= w) {
+                dp[j] = max(dp[j], dp[j - w] + v);
+            }
+        }
+    }
+}
