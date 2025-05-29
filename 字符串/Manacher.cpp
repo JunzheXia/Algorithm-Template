@@ -1,4 +1,6 @@
-    string s;
+O(n)
+
+string s;
     cin >> s;
     int n = s.length();
     string t = "-#";
@@ -7,7 +9,7 @@
         t += '#';
     }
     int m = t.length();
-    int mid = 0, r = 0;
+    int mid = 0， r = 0;
     vector<int> p(m);
     for (int i = 1; i < m - 1; i++) {
         p[i] = i < r ? min(p[2 * mid - i], r - i) : 0;
