@@ -46,9 +46,7 @@ void Andrew() {
 
 int Diameter() {
     int p = hull.size();
-    // if (p == 2) {
-    //     return pow(dist(hull[0], hull[1]), 2);
-    // }//不加也能过？！  p = 1 返回0
+    //p = 2不用特判，但如果题目中的n能等于1，那么要特判1
     double res = 0;
     for (int i = 0, j = 1; i < p; i++) {
         while (cross(hull[i], hull[(i + 1) % p], hull[(j + 1) % p]) >
