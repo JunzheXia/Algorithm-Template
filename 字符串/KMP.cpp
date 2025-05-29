@@ -1,3 +1,5 @@
+O(n + m)
+
 auto kmp = [&](string s, string t) {
     int n = s.size(), m = t.size();
     vector<int> kmp(m + 1), ans;
