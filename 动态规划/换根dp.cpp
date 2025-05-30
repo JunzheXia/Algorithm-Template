@@ -1,3 +1,5 @@
+计算所有点到哪个点的距离和最小，存在点权
+
 #include <bits/stdc++.h>
 #define int long long
 
@@ -9,7 +11,7 @@ const int N = 1e5 + 10;
 int n;
 int c[N], siz[N], f[N];
 // siz是以u为根子树大小（c数组） f是所有点到u的距离
-vector<pair<int, int>> g[N];
+vector<pair<int， int>> g[N];
 int ans = LLONG_MAX;
 
 void dfs1(int u, int p) {
