@@ -93,3 +93,98 @@ signed main() {
     cout << max_flow(s, t) << endl;  // 输出最大流
     return 0;
 }
+
+这是一道顶点割的网络流，传统网络流只能处理边割，对于顶点割问题，
+要将其进行顶点分裂转化为边割问题。
+将每个点分为出点和入点。如果出点和入点之间的边权为无穷大，就说明该点无法被删除
+对于原图，给出的两个点，我们将其形成的两个边首尾相连，形成类似于环
+
+#include <bits/stdc++.h>
+
+using namespace std;
+using i64 = long long;
+using u64 = unsigned long long;
+
+const int N = 210;
+const int INF = 0x3f3f3f3f;
+struct edge {
+    int v, cap, rev;
+};
+int n, m;
+int s, t;
+vector<edge> g[N];
+int level[N], iter[N];
+
+bool bfs() {
+    fill(level, level + 2 * n + 1, -1);
+    queue<int> q;
+    level[s] = 0;
+    q.push(s);
+    while (q.size()) {
+        int u = q.front();
+        q.pop();
+        for (auto& e : g[u]) {
+            if (e.cap > 0 && level[e.v] < 0) {
+                level[e.v] = level[u] + 1;
+                q.push(e.v);
+            }
+        }
+    }
+    return level[t] != -1;
+}
+
+int dfs(int u, int flow) {
+    if (u == t)
+        return flow;
+    for (int& i = iter[u]; i < g[u].size(); i++) {
+        auto& e = g[u][i];
+        if (e.cap > 0 && level[u] < level[e.v]) {
+            int d = dfs(e.v, min(flow, e.cap));
+            if (d > 0) {
+                e.cap -= d;
+                g[e.v][e.rev].cap += d;
+                return d;
+            }
+        }
+    }
+    return 0;
+}
+
+int Dinic() {
+    int maxflow = 0;
+    while (bfs()) {
+        fill(iter, iter + 2 * n + 1, 0);
+        int f;
+        while ((f = dfs(s, INF)) > 0) {
+            maxflow += f;
+        }
+    }
+    return maxflow;
+}
+
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+
+    cin >> n >> m >> s >> t;
+    for (int i = 1; i <= n; i++) {
+        if (i == s || i == t) {
+            g[i].emplace_back(i + n, INF, (int)g[i + n].size());
+            g[i + n].emplace_back(i, 0, (int)g[i].size() - 1);
+        }
+        else {
+            g[i].emplace_back(i + n, 1, (int)g[i + n].size());
+            g[i + n].emplace_back(i, 0, (int)g[i].size() - 1);
+        }
+    }
+    for (int i = 1; i <= m; i++) {
+        int u, v;
+        cin >> u >> v;
+        g[u + n].emplace_back(v, INF, (int)g[v].size());
+        g[v + n].emplace_back(u, INF, (int)g[u].size());
+        g[u].emplace_back(v + n, 0, (int)g[v + n].size() - 1);
+        g[v].emplace_back(u + n, 0, (int)g[u + n].size() - 1);
+    }
+    cout << Dinic();
+    return 0;
+}
