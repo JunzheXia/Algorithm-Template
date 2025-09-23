@@ -1,4 +1,4 @@
-实数域三分
+实数域三分  凸函数
 
 const double eps = 1e-7;
 
