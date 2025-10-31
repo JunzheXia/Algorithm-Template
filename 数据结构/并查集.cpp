@@ -19,3 +19,4 @@ struct DSU {
         return 1;
     }
 };
+DSU dsu(n);
