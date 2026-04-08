@@ -26,7 +26,7 @@ void addedge(int u, int v, int cap, int cost) {
 }
 
 bool spfa() {
-    for (int i = 1; i <= n; i++) {
+    for (int i = s; i <= t; i++) { 
         dis[i] = INF;
         vis[i] = 0;
         cur[i] = 0;
