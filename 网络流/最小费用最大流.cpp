@@ -1,3 +1,6 @@
+对于有上下界的问题，计算费用时要注意加上强制流的费用
+
+
 #include <bits/stdc++.h>
 #define int long long
 
