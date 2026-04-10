@@ -79,7 +79,7 @@ int kth(int u, int k) {
     if (k <= tr[tr[u].l].sz) {
         return kth(tr[u].l, k);
     }
-    if (k <= tr[tr[u].l].sz + 1) {
+    if (k == tr[tr[u].l].sz + 1) {
         return tr[u].val;
     }
     return kth(tr[u].r, k - tr[tr[u].l].sz - 1);
