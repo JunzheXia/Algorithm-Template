@@ -1,3 +1,6 @@
+存在问题，等待修改
+
+
 有向图
 
 #include <bits/stdc++.h>
